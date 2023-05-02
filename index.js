@@ -8,6 +8,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 12;
 
 app.set('view engine', 'ejs');
+//test commit
 
 const port = process.env.PORT || 3000;
 
