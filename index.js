@@ -42,6 +42,8 @@ var mongoStore = MongoStore.create({
   }
 })
 
+
+
 app.use(session({
   secret: node_session_secret,
   store: mongoStore,
@@ -60,6 +62,13 @@ const navLinks = [
   { label: "Members", path: "/members" },
   { label: "Admin", path: "/admin" }
 ];
+
+const footerLinks = [
+  { label: "Footer 1", path: "#", },
+  { label: "Footer 2", path: "#" },
+  { label: "Footer 3", path: "#" },
+  { label: "Footer 4", path: "#" }
+]
 
 
 function isValidSession(req) {
@@ -80,7 +89,7 @@ function isAdmin(req) {
 function adminAuthorization(req, res) {
   if (!isAdmin(req)) {
     res.status(403);
-    res.render("notAuthorized", { user: req.session.user, navLinks: navLinks, currentUrl: url.parse(req.url).pathname });
+    res.render("notAuthorized", { user: req.session.user, navLinks: navLinks, footerLinks: footerLinks, currentUrl: url.parse(req.url).pathname });
     return false;
   }
   else {
@@ -109,14 +118,14 @@ app.get('/admin', async (req, res) => {
   if (userIsAdmin) {
     console.log("admin found")
     const result = await userCollection.find({}).toArray();
-    res.render('admin', { user: req.session.user, users: result, navLinks: navLinks, currentUrl: url.parse(req.url).pathname });
+    res.render('admin', { user: req.session.user, footerLinks: footerLinks, users: result, navLinks: navLinks, currentUrl: url.parse(req.url).pathname });
   }
 });
 
 
 
 app.get('/', (req, res) => {
-  res.render("index", { user: req.session.user, navLinks: navLinks, currentUrl: url.parse(req.url).pathname });
+  res.render("index", { user: req.session.user, navLinks: navLinks, currentUrl: url.parse(req.url).pathname, footerLinks: footerLinks });
 });
 
 app.get('/members', (req, res) => {
@@ -127,7 +136,7 @@ app.get('/members', (req, res) => {
   }
   //make a random number between 1 and 3
   var num = Math.floor(Math.random() * 3) + 1;
-  res.render('members', { user: req.session.user, num: num, navLinks: navLinks, currentUrl: url.parse(req.url).pathname });
+  res.render('members', { user: req.session.user, num: num, navLinks: navLinks, currentUrl: url.parse(req.url).pathname, footerLinks: footerLinks });
 });
 
 
@@ -158,7 +167,7 @@ app.use(express.static(__dirname + "/public"));
 
 // Render the sign up form
 app.get('/signup', (req, res) => {
-  res.render('sign up', { user: req.session.user, navLinks: navLinks, currentUrl: url.parse(req.url).pathname });
+  res.render('sign up', { user: req.session.user, navLinks: navLinks, currentUrl: url.parse(req.url).pathname, footerLinks: footerLinks });
 });
 
 
@@ -222,7 +231,7 @@ app.get('/signin', (req, res) => {
     res.redirect('/members');
     return;
   }
-  res.render("sign in", { user: req.session.user, navLinks: navLinks, currentUrl: url.parse(req.url).pathname });
+  res.render("sign in", { user: req.session.user, navLinks: navLinks, currentUrl: url.parse(req.url).pathname, footerLinks: footerLinks });
 });
 
 
@@ -309,7 +318,7 @@ app.get("*", (req, res) => {
   res.status(404);
   // res.send("Page not found - 404");
   //send a prettier html 404 error
-  res.render('404', { navLinks: navLinks, currentUrl: url.parse(req.url).pathname });
+  res.render('404', { navLinks: navLinks, currentUrl: url.parse(req.url).pathname, footerLinks: footerLinks });
 })
 
 // listen for requests :)
