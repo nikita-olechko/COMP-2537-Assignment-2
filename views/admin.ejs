@@ -33,15 +33,9 @@
                                     </td>
                                     <td>
                                         <% if (user.user_type==='user' ) { %>
-                                            <form method="post" action="/promoteUser">
-                                                <input type="hidden" name="username" value="<%= user.username %>">
-                                                <button class="btn btn-primary">Promote to Admin</button>
-                                            </form>
+                                            <%- include("templates/promoteForm", {user_name: user}) %>
                                             <% } else { %>
-                                                <form method="post" action="/demoteUser">
-                                                    <input type="hidden" name="username" value="<%= user.username %>">
-                                                    <button class="btn btn-warning">Demote to Normal</button>
-                                                </form>
+                                                <%- include("templates/demoteForm", {user_name: user}) %>
                                                 <% } %>
                                     </td>
                                     <td>
