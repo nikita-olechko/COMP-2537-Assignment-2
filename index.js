@@ -52,6 +52,16 @@ app.use(session({
   }
 }));
 
+
+const navLinks = [
+  { label: "Home", path: "/", },
+  { label: "Sign Up", path: "/signup" },
+  { label: "Sign In", path: "/signin" },
+  { label: "Members", path: "/members" },
+  { label: "Admin", path: "/admin" }
+];
+
+
 function isValidSession(req) {
   console.log("checking session")
   if (req.session.user) {
@@ -104,14 +114,6 @@ app.get('/admin', async (req, res) => {
 });
 
 
-const navLinks = [
-  { label: "Home", path: "/", },
-  { label: "Sign Up", path: "/signup" },
-  { label: "Sign In", path: "/signin" },
-  { label: "Members", path: "/members" },
-  { label: "Admin", path: "/admin" },
-  { label: "404", path: "/dne" },
-];
 
 app.get('/', (req, res) => {
   res.render("index", { user: req.session.user, navLinks: navLinks, currentUrl: url.parse(req.url).pathname });
