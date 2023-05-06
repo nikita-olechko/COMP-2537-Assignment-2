@@ -18,7 +18,14 @@
                 <div class="col-md-6 text-center">
                     <h3> Welcome <%= user.username %>!</h3>
                     <br>
-                    <img src="/00<%= num %>.jpg" class="" width="400px" height="400px">
+                    <div class="row">
+                        <% for (var i=0; i < 3; i++) { %>
+                            <div class="col-lg">
+                                <img src="/00<%=Math.floor(Math.random() * 3) + 1 %>.jpg" class="img-fluid">
+                            </div>
+                            <% } %>
+                    </div>
+                    <!-- <img src="/00<%= num %>.jpg" class="" width="400px" height="400px"> -->
                     <br>
                     <form method="post" action="/signout">
                         <button type="submit" class="btn btn-danger mt-3">Sign Out</button>
